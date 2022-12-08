@@ -703,7 +703,9 @@ int main(int argc, char **argv)
   } 
   else {  // event device supplied as -d argument
     std::string::size_type i = args.device.find_last_of('/');
-    args.device = (std::string(INPUT_EVENT_PATH) + args.device.substr(i == std::string::npos ? 0 : i + 1));
+    if (i == std::string::npos) {
+      args.device = "/dev/input/" + args.device;
+    }
   }
   
   set_signal_handling();
